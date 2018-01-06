@@ -1,0 +1,20 @@
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.leading {
+  font-weight: 600;
+}
+
+.big {
+  font-size: 24px;
+}
+
+.vault-block {
+  border: 1px solid black;
+  height: 40px;
+}

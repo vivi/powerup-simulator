@@ -1,0 +1,221 @@
+<html>
+<head>
+    <title>FRC Power Up</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="FRC Power Up">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <script src="/assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+  <h1>FRC Power Up</h1>
+  <div class="row">
+    <div class="col-sm-5" align="center" style="position:fixed">
+      <h2>Score <button id="update-score" type="button" class="btn btn-secondary btn-md">Update</button></h2>
+      <div class="row">
+        <div class="blue col">
+          <span class="big" id="score-blue-auto">0</span>
+        </div>
+        <div class="blue col">
+          <span class="big" id="score-blue-teleop">0</span>
+        </div>
+        <div class="red col">
+          <span class="big" id="score-red-auto">0</span>
+        </div>
+        <div class="red col">
+          <span class="big" id="score-red-teleop">0</span>
+        </div>
+      </div>
+      <hr>
+      <h2>Scale</h2>
+      <canvas id="scale-bar" width="450px" height="4px"></canvas>
+      <div class="row">
+        <div class="blue col">
+          <span class="big" id="scale-blue">0</span><br>
+          BLOCKS
+        </div>
+        <div class="red col">
+          <span class="big" id="scale-red">0</span><br>
+          BLOCKS
+        </div>
+      </div>
+      <br>
+      <hr>
+      <div class="row" align="center">
+        <div class="col" id="blue-alliance">
+          <h2 class="blue">Blue Switch</h2>
+          <canvas id="blue-switch-bar" width="150px" height="3px"></canvas>
+          <div class="row" align="center">
+            <div class="blue col">
+              <span class="big" id="switch-blue-blue">0</span><br>
+              BLOCKS
+            </div>
+            <div class="red col">
+              <span class="big" id="switch-red-blue">0</span><br>
+              BLOCKS
+            </div>
+          </div><br>
+          <h2 class="blue">Blue Vault</h2>
+          <div class="row">
+            <div class="col">
+              Force
+            </div>
+            <div class="col">
+              Levitate
+            </div>
+            <div class="col">
+              Boost
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span class="big blue blue-force">0</span>
+            </div>
+            <div class="col">
+              <span class="big blue blue-lev">0</span>
+            </div>
+            <div class="col">
+              <span class="big blue blue-boost">0</span>
+            </div>
+          </div>
+          <h3 class="blue">Hangs: <span id="blue-hang">0</span></h3>
+        </div>
+        &nbsp; &nbsp; &nbsp;
+        <div class="col" id="red-alliance">
+          <h2 class="red">Red Switch</h2>
+          <canvas id="red-switch-bar" width="150px" height="3px"></canvas>
+          <div class="row" align="center">
+            <div class="blue col" align="center">
+              <span class="big" id="switch-blue-red">0</span><br>
+              BLOCKS
+            </div>
+            <div class="red col" align="center">
+              <span class="big" id="switch-red-red">0</span><br>
+              BLOCKS
+            </div>
+          </div><br>
+          <h2 class="red">Red Vault</h2>
+          <div class="row">
+            <div class="col">
+              Force
+            </div>
+            <div class="col">
+              Levitate
+            </div>
+            <div class="col">
+              Boost
+            </div>
+          </div>
+          <div class="row">
+            <div class="red col">
+              <span class="big red-force">0</span>
+            </div>
+            <div class="red col">
+              <span class="big red-levitate">0</span>
+            </div>
+            <div class="red col">
+              <span class="big red-boost">0</span>
+            </div>
+          </div>
+          <h3 class="red">Hangs: <span id="red-hang">0</span></h3>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-6 offset-sm-6">
+    <div class="form-group row">
+      <label for="dist" class="col-5 col-form-label">Distance to Travel (ft):</label>
+      <div class="col-7">
+        <input class="form-control" type="number" value="0" id="dist">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button onclick="drive(8)" type="button" class="btn btn-secondary btn-md">Drive I</button>
+        <button onclick="drive(12)" type="button" class="btn btn-secondary btn-md">Drive II</button>
+        <button onclick="drive(16)" type="button" class="btn btn-secondary btn-md">Drive III</button>
+      </div>
+      <div class="col">
+        Time taken: <span id="dist-time">0</span>s<br>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">
+      <button onclick="hang(0.3, true)" type="button" class="btn btn-primary btn-md">Hang I</button>
+      <button onclick="hang(0.5, true)" type="button" class="btn btn-primary btn-md">Hang II</button>
+      <button onclick="hang(0.7, true)" type="button" class="btn btn-primary btn-md">Hang III</button>
+      </div>
+      <div class="col">
+      Hang Result: <span id="blue-hang-result"></span>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">
+      <button onclick="hang(0.3, false)" type="button" class="btn btn-danger btn-md">Hang I</button>
+      <button onclick="hang(0.5, false)" type="button" class="btn btn-danger btn-md">Hang II</button>
+      <button onclick="hang(0.7, false)" type="button" class="btn btn-danger btn-md">Hang III</button>
+      </div>
+      <div class="col">
+      Hang Result: <span id="red-hang-result"></span>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <label for="time" class="col-5 col-form-label">Time of action (s):</label>
+      <div class="col-7">
+        <input class="form-control" type="number" value="0" id="time">
+      </div>
+    </div>
+    <h2 class="blue">Blue Alliance</h2>
+    <h3>Autonomous</h3>
+    <button id="blue-auto-line" type="button" class="btn btn-primary btn-md">Auto Line</button>
+    <button type="button" class="blue-scale btn btn-primary btn-md">Block in Scale</button>
+    <button type="button" class="blue-blue-switch btn btn-primary btn-md">Block in Blue Switch</button>
+    <br><br>
+    <h3>Teleop</h3>
+    <button type="button" class="blue-scale btn btn-primary btn-md">Block in Scale</button>
+    <button type="button" class="blue-red-switch btn btn-danger btn-md">Block in Red Switch</button>
+    <button type="button" class="blue-blue-switch btn btn-primary btn-md">Block in Blue Switch</button>
+    <br><br>
+    <button type="button" class="blk-blue-force btn btn-primary btn-md" id="blue-block-force">Block in Force</button>
+    <button type="button" class="blk-blue-lev btn btn-primary btn-md">Block in Levitate</button>
+    <button type="button" class="blk-blue-boost btn btn-primary btn-md">Block in Boost</button>
+    <br><br>
+    <button type="button" class="use-blue-force btn btn-primary btn-md">Use Force</button>
+    <button type="button" class="use-blue-lev btn btn-primary btn-md">Use Levitate</button>
+    <button type="button" class="use-blue-boost btn btn-primary btn-md">Use Boost</button>
+    <br><br>
+    <h2 class="red">Red Alliance</h2>
+    <h3>Autonomous</h3>
+    <button id="red-auto-line" type="button" class="btn btn-danger btn-md">Auto Line</button>
+    <button type="button" class="red-scale btn btn-danger btn-md">Block in Scale</button>
+    <button type="button" class="red-red-switch btn btn-danger btn-md">Block in Red Switch</button>
+    <br><br>
+    <h3>Teleop</h3>
+    <button type="button" class="red-scale btn btn-danger btn-md">Block in Scale</button>
+    <button type="button" class="red-red-switch btn btn-danger btn-md">Block in Red Switch</button>
+    <button type="button" class="red-blue-switch btn btn-primary btn-md">Block in Blue Switch</button>
+    <br><br>
+    <button type="button" class="blk-red-force btn btn-danger btn-md">Block in Force</button>
+    <button type="button" class="blk-red-lev btn btn-danger btn-md">Block in Levitate</button>
+    <button type="button" class="blk-red-boost btn btn-danger btn-md">Block in Boost</button>
+    <br><br>
+    <button type="button" class="use-red-force btn btn-danger btn-md">Use Force</button>
+    <button type="button" class="use-red-lev btn btn-danger btn-md">Use Levitate</button>
+    <button type="button" class="use-red-boost btn btn-danger btn-md">Use Boost</button>
+    <button type="button" class="red-hang btn btn-danger btn-md">Hang</button>
+    <br><br>
+  </div>
+  </div>
+</div>
+</body>
+<script src="/assets/js/bar.js" type="text/javascript"></script>
